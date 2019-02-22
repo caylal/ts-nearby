@@ -1,0 +1,61 @@
+<!--index.wxml-->
+<view class="container">
+  
+  <view class="banner">
+      <swiper class="swiper_box" indicator-dots="{{indicatorDots}}" circular="{{circular}}" vertical="{{vertical}}" indicator-color="rgba(255, 255, 255, .3)"         indicator-active-color="rgba(210, 34, 34, .7)" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" bindchange="swiperchange">
+        <block wx:for="{{imagesUrl}}" wx:key="{{item.id}}">
+          <swiper-item>
+            <image src="{{item.img}}" class="slide-image"/>
+          </swiper-item>
+        </block>        
+      </swiper>
+  </view>
+  <view class="header">
+    <navigator class="position" url="/pages/location/location?index=true">      
+      <span class='iconfont icon-zuobiaofill h-icon'></span>
+      <text class="position-text">{{locationName}}</text>
+      <span class='iconfont icon-xiajiantou j-icon'></span>
+    </navigator>
+    
+    <view class="search" bindtap="Search">
+      <icon class="search-icon" type="search" size="16" color='#fff'></icon>
+      <input class="search-box" placeholder="搜索栏" placeholder-style='color: #eee' disabled="true"></input>
+    </view>
+    <!-- <view class="msg"><navigator url="../../member/msg/index"><span class="iconfont icon-liuyanfill img"></span></navigator></view> -->
+  </view>  
+  <view class='goods-category'>
+    <!--<view class='category-title'>
+       <view class='title-text' style=' background-color: #76e3ee;'><text class='text'>商品上门</text></view> 
+      <text class="title-tag">商品上门</text> 
+    </view>-->
+    <view class='goods-info'>
+      <view class='goods-title'>
+        <view class='item-title'>        
+          <view>
+            <icon class='iconfont icon-tuijianshangjia'></icon>
+            <text class='item-text'>推荐商品</text>
+          </view>
+          <navigator class='goods-more' url="/pages/category/index"><text>更多</text><span class='iconfont icon-shuangjiantouyou'></span></navigator>
+        </view>
+      </view>
+      <view class='goods-items' > 
+        <template is="goods-item" data="{{goodItem: recGoods}}" /> 
+      </view>
+    </view> 
+    <view class='goods-info'>
+      <view class='goods-title'>
+        <view class='item-title'>        
+          <view>
+            <icon class='iconfont icon-rexiaochanpin'></icon>
+            <text class='item-text'>热卖商品</text>
+          </view>
+          <navigator class='goods-more' url="/pages/category/index"><text>更多</text><span class='iconfont icon-shuangjiantouyou'></span></navigator>
+        </view>
+      </view>
+      <view class='goods-items' > 
+          
+      </view>
+    </view> 
+  </view>
+
+</view>

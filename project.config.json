@@ -1,0 +1,21 @@
+{
+	"description": "项目配置文件",
+	"miniprogramRoot": "dist/",
+	"packOptions": {
+		"ignore": []
+	},
+	"compileType": "miniprogram",
+	"libVersion": "2.4.0",
+	"projectname": "ts-nearby",
+	"setting": {
+		"urlCheck": false,
+		"es6": true,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true,
+		"nodeModules": true,
+		"autoAudits": false
+	},
+	"appid": "wx2b45c1f6d2e1694d",
+	"condition": {}
+}

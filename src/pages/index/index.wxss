@@ -1,0 +1,89 @@
+/**index.wxss**/
+/* @import "../goods/goodsitem.wxss"; */
+.header{ 
+  display: flex;
+  top: 0;
+  width: 100%;
+  height: 80rpx;
+  /* font-size:30rpx;  */
+  padding: 5rpx;
+  background-color: rgba(0,0,0,0.1);
+  position: fixed; 
+  align-items:center;
+  box-sizing: border-box;
+  z-index:2;
+}
+.header .search{
+  width: 70%;
+  border-radius: 5px;
+  display: flex;
+  height:60rpx;
+  background-color: rgba(0,0,0,0.1); 
+}
+.search .search-icon{
+  position: relative;
+  left: 10rpx;
+  top: 15rpx;
+  box-sizing: border-box;
+ 
+}
+.search .search-box{
+  padding-left: 35rpx;
+  height:inherit;
+} 
+.header .msg{
+  width: 10%; 
+  text-align: center;  
+}
+.msg span{
+  font-size: 43rpx;
+  color: #fff;
+}
+.search-img{
+  position: absolute;
+  width: 40rpx;
+  height: 40rpx;
+  top: 12rpx; 
+  padding-left: 5rpx; 
+}
+.header .position{
+  width:30%;
+  height: 50rpx;
+  display: flex;
+  align-items: center;
+  margin: 0 8rpx;
+  text-align:center;
+
+}
+.position .h-icon{
+  font-size: 45rpx;
+  color: #eee;
+}
+.position .j-icon{
+  font-size: 36rpx;
+  color: #eee;
+}
+.position-text{
+  color: #fff; 
+  font-size: 32rpx;
+  width: 70%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.swiper_box{
+  width: 100%;
+  height: 340rpx;
+  background:#fff;
+
+}
+.slide-image{
+  width: 100%;  
+  height: 100%;
+}
+.life-notice{
+  height: 100rpx;
+  width: 100%;
+  border-bottom:1px solid #ddd; 
+}
+
