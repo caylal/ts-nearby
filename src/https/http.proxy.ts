@@ -1,61 +1,11 @@
 import {ILog} from '../logs/log.interface'
 import {LogFactory} from '../logs/log.factory'
-import {Params,IToken, Api, HttpMethod,IDealWithCodeOption,ICommonResponse,IResponseResult} from './http.interface'
-import {Auth,apiPrefix} from '../config/cfg.config'
-import {transExpiresDt} from '../utils/util'
+import {Params,IToken, Api, HttpMethod,IDealWithCodeOption,ICommonResponse} from './http.interface'
+import {apiPrefix, cfgMock} from '../config/cfg.config'
 export class HttpProxy {
-    private static log: ILog = LogFactory.get(HttpProxy)
-    private static freshStatus: boolean = false
-    private static isDebug: boolean = false
-    constructor(){}
-    public static request(api: string, params: Params): Promise<object> {
-        return new Promise((resolve, reject) => {
-            if(this.guard(api)) {
-               const token: IToken = wx.getStorageSync('token')
-               const dtNow: number = new Date().valueOf()
-               if(!!token && token.expired < dtNow) {
-                   if(!this.freshStatus) {
-                       this.freshStatus = true
-                       this.doRequest(Auth.refreshTokenUrl, false, {data: {refreshToken: token.refresh_token}}).then((res: ICommonResponse) => {
-                            const response_res: IResponseResult = res.result 
-                            if(response_res.token){
-                                response_res.token.expired = transExpiresDt(response_res.token.expires_in)
-                                wx.setStorageSync('token', response_res.token)
-                                this.freshStatus = false
+    private static log: ILog = LogFactory.get(HttpProxy) 
 
-                                this.doRequest(api, true, params).then((res: ICommonResponse) => {
-                                    resolve(res)
-                                }).catch(err => {
-                                    reject(err)
-                                })
-                            } 
-                       }).catch(err => {
-                           if(err.code === 210 || err.code === 220) {
-                                // wx.removeStorageSync('userInfo')
-                                // wx.removeStorageSync('token')
-                                // wx.removeStorageSync('wx')
-                                // const url = getPageUrl()
-                                // wx.redirectTo({
-                                //     url: '/pages/authorize/index?url=/' + url,
-                                // })
-                                // console.log(url)
-                           }
-                       })
-                   } else {
-                       //token刷新中
-                       let result = this.recurRequest(api, params)
-                       resolve(result)
-                   }
-               } else {
-                   this.doRequest(api, true, params).then(res => resolve(res)).catch(err => reject(err))
-               }
-            } else {
-                this.doRequest(api, false, params).then(res => resolve(res)).catch(err => reject(err))
-            }
-        })
-    }
-
-    private static doRequest(api: string, tokenCheck: boolean, params: Params) {
+    public static doRequest(api: string, tokenCheck: boolean, params: Params) {
         let result: Promise<object>
         if(tokenCheck) {
             const token: IToken = wx.getStorageSync('token')
@@ -65,10 +15,11 @@ export class HttpProxy {
                 Object.assign(params.data, { access_token: token.access_token})
             }
         }
-        api = this.urlPrefix(api, apiPrefix);
-        if(this.isDebug) {
+       
+        if(cfgMock.enable) {
             this.log.log('mock request: ' + api, params)
-        } else {           
+        } else {     
+            api = this.urlPrefix(api, apiPrefix);      
             const httpApi = this.analyzeApi(api)
             if(!!params && !!params.path) {
                 httpApi.url = this.urlFormat(httpApi.url, params.path)
@@ -110,19 +61,7 @@ export class HttpProxy {
               });
               reject(dataResponse);
         }
-    }
-
-    private static recurRequest(api: string, params: Params) {
-        let result;
-        if(this.freshStatus) {
-            setTimeout(() => {
-                this.recurRequest(api, params)
-            }, 1000)
-        }else {
-            result = this.doRequest(api, true, params)
-        }
-        return result
-    }
+    }   
 
     private static urlFormat (url: string, pathParam?: any): string {
         let result = url;
@@ -183,18 +122,5 @@ export class HttpProxy {
             }
         }
         return result;
-    }
-
-    private static guard(api: string):boolean {
-        let result: boolean = false;
-        if(Auth.enable) {
-            result = true
-            if(api.indexOf(Auth.refreshTokenUrl) > 0) {
-                result = false
-            } else if(api.indexOf(Auth.login) > 0){
-                result = false
-            }
-        }
-        return result
-    }
+    }   
 }

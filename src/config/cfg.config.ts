@@ -61,5 +61,10 @@ export const logConfig: IConfig = {
     "refreshTokenUrl": "get auth/refresh",
   }
   export const apiPrefix = "https://www.lifenearby.cn:8081/api"
+
+  export const cfgMock = {
+    "enable": true,
+    "match": ["^[\\s\\S]*$"]
+  }
   
   

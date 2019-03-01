@@ -1,0 +1,16 @@
+<view class='goods' wx:for="{{itemList}}" data-gid="{{item.goodsid}}" wx:key="{{item.id}}">
+    <view class='item'>
+        <navigator class="item-nav" url="{{item.url}}">
+            <image class='goods-img' src="{{item.img}}"></image>
+            <text class='goods-name'>{{item.name}} {{item.spec}}{{item.unit}}</text>
+        </navigator>
+        <view class='goods-buy'>
+            <view class='goods-price'>￥{{item.retailprice}}</view>
+            <view class='goods-opt'>                
+                <view bindtap="changeCart" data-index="{{index}}">
+                    <span class="iconfont icon-gouwuche1 goods-btn"></span>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

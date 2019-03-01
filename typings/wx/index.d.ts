@@ -58,3 +58,5 @@ type InstanceType<T extends new (...args: any[]) => any> = T extends new (...arg
 type Optional<T> = {
   [K in keyof T]+?: T[K]
 }
+// 临时解决ts,后续小程序工具是否会更新
+declare function require(pluginName: string): any;

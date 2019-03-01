@@ -2,7 +2,9 @@
 export interface IMyApp {
   userInfoReadyCallback?(res: wx.UserInfo): void
   globalData: {
-    userInfo?: wx.UserInfo
+    userInfo?: wx.UserInfo,
+    StatusBar?: number,
+    CustomBar?: number
   }
 }
 
@@ -37,6 +39,14 @@ App<IMyApp>({
             }
           })
         }
+      }
+    })
+
+    wx.getSystemInfo({
+      success: e => {
+        this.globalData.StatusBar = e.statusBarHeight;
+        let custom = wx.getMenuButtonBoundingClientRect();        
+        this.globalData.CustomBar = custom.bottom + custom.top - e.statusBarHeight;
       }
     })
   },

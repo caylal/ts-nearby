@@ -11,7 +11,6 @@ export interface ParamItem {
 }
 export interface Params {
     path?: ParamItem;
-    query?: ParamItem;
     data?: any;
 }
 
