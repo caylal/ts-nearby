@@ -4,7 +4,8 @@ export interface IMyApp {
   globalData: {
     userInfo?: wx.UserInfo,
     StatusBar?: number,
-    CustomBar?: number
+    CustomBar?: number,
+    CstNbhd?: any
   }
 }
 

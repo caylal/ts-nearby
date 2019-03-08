@@ -1,5 +1,4 @@
 {
   "usingComponents": {
-    "good-item": "../components/goodItem/good-item"
   }
 }

@@ -2,11 +2,12 @@ import {ILog} from '../logs/log.interface'
 import {LogFactory} from '../logs/log.factory'
 import {Params,IToken, Api, HttpMethod,IDealWithCodeOption,ICommonResponse} from './http.interface'
 import {apiPrefix, cfgMock} from '../config/cfg.config'
+import {getMock} from '../api/__mock__/_mock'
 export class HttpProxy {
     private static log: ILog = LogFactory.get(HttpProxy) 
 
     public static doRequest(api: string, tokenCheck: boolean, params: Params) {
-        let result: Promise<object>
+        let result: Promise<ICommonResponse>
         if(tokenCheck) {
             const token: IToken = wx.getStorageSync('token')
             if(!!token) {
@@ -18,6 +19,12 @@ export class HttpProxy {
        
         if(cfgMock.enable) {
             this.log.log('mock request: ' + api, params)
+            result = new Promise<ICommonResponse>((resolve, reject) => {
+                getMock({url: api, body: params}).then(res => {
+                    this.log.log('mock response: ' + api, res)
+                    resolve(res)
+                })
+            }) 
         } else {     
             api = this.urlPrefix(api, apiPrefix);      
             const httpApi = this.analyzeApi(api)
@@ -26,7 +33,7 @@ export class HttpProxy {
             }
             this.log.log('requset: ' + HttpMethod[httpApi.method] +' ' + httpApi.url, params.data)
             const method: any = HttpMethod[httpApi.method]
-            result = new Promise((resolve, reject) => {
+            result = new Promise<ICommonResponse>((resolve, reject) => {
                 wx.request({
                     url: httpApi.url,
                     data: params.data,

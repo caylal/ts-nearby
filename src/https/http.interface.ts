@@ -22,7 +22,7 @@ export interface IHttp {
 }
 
 export interface ICommonResponse {
-    code?: number;
+    code: number;
     result?: IResponseResult | any;
     error?: string
 }

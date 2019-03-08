@@ -60,3 +60,4 @@ type Optional<T> = {
 }
 // 临时解决ts,后续小程序工具是否会更新
 declare function require(pluginName: string): any;
+declare function Component(...args: any[]): any;

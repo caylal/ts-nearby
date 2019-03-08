@@ -1,0 +1,7 @@
+.cu-item {
+  display: flex;
+  flex-direction: column;
+  /* padding: 20rpx 0 30rpx; */
+  position: relative;
+  transition-duration: 0s;
+}

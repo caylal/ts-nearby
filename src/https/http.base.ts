@@ -4,35 +4,35 @@ import {Auth} from '../config/cfg.config'
 import {transExpiresDt} from '../utils/util'
 export class HttpBase implements IHttp {
     private freshStatus: boolean = false
-    get(url: string, params: Params): Promise<object>{
+    get(url: string, params: Params): Promise<ICommonResponse>{
         return this.request(url, params)
     }
-    post(url: string, params: Params): Promise<object>{
+    post(url: string, params: Params): Promise<ICommonResponse>{
         return this.request(url, params)
     }
-    put(url: string, params: Params): Promise<object>{
+    put(url: string, params: Params): Promise<ICommonResponse>{
         return this.request(url, params)
     }
-    delete(url: string, params: Params): Promise<object>{
+    delete(url: string, params: Params): Promise<ICommonResponse>{
         return this.request(url, params)
     }
 
-    protected request(api: string, params: Params): Promise<object> {
-        return new Promise((resolve, reject) => {
+    protected request(api: string, params: Params): Promise<ICommonResponse> {
+        return new Promise<ICommonResponse>((resolve, reject) => {
             if(this.guard(api)) {
                const token: IToken = wx.getStorageSync('token')
                const dtNow: number = new Date().valueOf()
                if(!!token && token.expired < dtNow) {
                    if(!this.freshStatus) {
                        this.freshStatus = true
-                       HttpProxy.doRequest(Auth.refreshTokenUrl, false, {data: {refreshToken: token.refresh_token}}).then((res: ICommonResponse) => {
+                       HttpProxy.doRequest(Auth.refreshTokenUrl, false, {data: {refreshToken: token.refresh_token}}).then(res => {
                             const response_res: IResponseResult = res.result 
                             if(response_res.token){
                                 response_res.token.expired = transExpiresDt(response_res.token.expires_in)
                                 wx.setStorageSync('token', response_res.token)
                                 this.freshStatus = false
 
-                                HttpProxy.doRequest(api, true, params).then((res: ICommonResponse) => {
+                                HttpProxy.doRequest(api, true, params).then(res => {
                                     resolve(res)
                                 }).catch(err => {
                                     reject(err)
@@ -76,7 +76,7 @@ export class HttpBase implements IHttp {
         return result
     }
     private  recurRequest(api: string, params: Params) {
-        let result;
+        let result: Promise<ICommonResponse>;
         if(this.freshStatus) {
             setTimeout(() => {
                 this.recurRequest(api, params)
