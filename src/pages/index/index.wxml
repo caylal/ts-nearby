@@ -6,9 +6,9 @@
 </view>
 <!-- 内容 -->
 <!-- 顶部搜索/定位开始 -->
-<view class="cu-bar bg-white search fixed">
+<view class="cu-bar bg-white-a search fixed" style='top:{{CustomBar}}px;'>
   <view class="action">
-    <text class="text-cut">南苑新村</text>
+    <text class="text-cut margin-right-xs {">南苑新村</text>
     <text class="icon-triangledownfill"></text>
   </view>
   <view class="search-form round">

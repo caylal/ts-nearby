@@ -63,6 +63,7 @@ Page({
         log.log("hot-list: ", data)
         if(!isEmpty(data.result)) {
           data.result.map((item: any)=> {
+            item.cate = "hot"  
             item.url = `pages/good/index?url=${Apis.hot.restful.get}&&id=${item.id}`
           })
           _this.setData!({
@@ -86,6 +87,7 @@ Page({
         const data: ICommonResponse = res
         if(!isEmpty(data.result)) {
           data.result.map((item: any) => {
+            item.cate = "rec"  
             item.url = `/pages/good/index?url=${Apis.rec.restful.get}&&id=${item.id }`
             let num = parseFloat(item.retailprice)
             item.retailprice = num.toFixed(2)
@@ -104,8 +106,7 @@ Page({
     })
    
   },
-  // 商品添加购物车
-  addCartListenner(e: any) {
-    log.log("addCartListenner: ", e)
-  }
+  addCart(e: any) {
+    log.log('addCartListener: ' , e)
+  } 
 })

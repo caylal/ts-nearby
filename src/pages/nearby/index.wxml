@@ -1,0 +1,18 @@
+<!-- ttopBar样式 -->
+<view class="cu-custom" style="height:{{CustomBar}}px;">
+  <view class="cu-bar bg-gradual-orange fixed" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px;">
+    <view class="content" style="top:{{StatusBar}}px;">近邻生活</view>
+  </view>
+</view>
+
+<!-- 切换地图开始 -->
+<view class="cu-bar bg-white solid-bottom">
+  <view class='action'>
+    <text class='icon-titles text-orange '></text> 切换地图
+  </view>
+  <view class='action'>
+    <switch class='sm' checked='{{isMap}}' bindchange='isMap'></switch>
+  </view>
+</view>
+
+<!-- 切换地图结束 -->
